@@ -1,0 +1,52 @@
+version: "3.7"
+services:
+  app:
+    build:
+      args:
+        user: sammy
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: travellist
+    container_name: travellist-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    networks:
+      - travellist
+ 
+  nginx:
+    image: nginx:1.17-alpine
+    container_name: travellist-nginx
+    restart: unless-stopped
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d
+    networks:
+      - travellist
+  database:
+    build:
+      context: .
+      dockerfile: db.Dockerfile
+    tty: true
+    ports:
+      - "3308:3306"
+    environment:
+      MYSQL_DATABASE: ComporPlay
+      MYSQL_ROOT_PASSWORD: RootPassword
+      MYSQL_PASSWORD: MainPassword
+      MYSQL_USER: MainUser
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - db-volume:/var/lib/mysql
+    networks:
+      - travellist
+networks:
+  travellist:
+    driver: bridge
+volumes:
+  db-volume:
