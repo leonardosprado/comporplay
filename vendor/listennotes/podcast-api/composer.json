@@ -1,0 +1,35 @@
+{
+    "name": "listennotes/podcast-api",
+    "description": "PHP bindings for the Listen Notes Podcast API",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Listen Notes, Inc.",
+            "email": "hello@listennotes.com"
+        }
+    ],
+    "require": {
+        "php": "^7.0 || ^8.0",
+        "ext-curl": "*",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "bamarni/composer-bin-plugin": "^1.4",
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "ListenNotes\\PodcastApi\\": "listennotes/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ListenNotes\\PodcastApi\\": [
+                "tests/"
+            ]
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    }    
+}

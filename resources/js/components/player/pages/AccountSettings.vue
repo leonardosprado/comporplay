@@ -126,16 +126,7 @@
                             </v-row>
                         </v-container>
                         <template
-                            v-if="
-                                $store.getters.getSettings
-                                    .enable_artist_account &&
-                                    $store.getters.getSettings
-                                        .allowArtistAccountRequests &&
-                                    !$store.getters.getUser.roles.some(
-                                        role => role.name == 'artist'
-                                    ) &&
-                                    !$store.getters.getUser.is_admin
-                            "
+                        
                         >
                             <v-divider></v-divider>
                             <v-btn
@@ -289,6 +280,9 @@
                         </v-card>
                     </v-col>
                     <v-col cols="12">
+                        <h1>Solicitar</h1>
+                    </v-col>
+                    <v-col cols="12">
                         <v-btn
                             class="success ml-auto d-flex"
                             @click="saveChanges"
@@ -414,6 +408,9 @@ export default {
             supportedLanguages: [],
             countriesList
         };
+    },
+    mounted() {
+        console.log($store.getters.getSettings);
     },
     methods: {
         fetchLanguages() {

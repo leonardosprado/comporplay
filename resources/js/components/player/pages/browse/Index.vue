@@ -1,5 +1,6 @@
 <template>
     <div class="browse-container content-page">
+        
         <div class="icon-header">
             <div class="cover">
                 <v-icon dark>$vuetify.icons.compass</v-icon>
@@ -9,7 +10,7 @@
                 <div class="sub">
                     {{ $t('Explore and listen to various genres & moods.') }}
                 </div>
-            </div>
+            </div> 
         </div>
         <div class="options-menu">
             <ul id="navigation-list">
@@ -59,6 +60,7 @@ export default {
     },
     mounted() {
         this.moveUnderline(this.$route.path.match("chart") ? 1 : 0);
+    
     },
     methods: {
         moveUnderline(index) {

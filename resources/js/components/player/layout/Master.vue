@@ -1,21 +1,25 @@
 <template>
+
     <main
         @click="hideWindows"
         id="player-container"
         :class="this.$vuetify.theme.dark ? 'player--dark' : 'player--light'"
     >
+
         <Sidebar :installButton="installButton"></Sidebar>
         <Navbar
             @toggle="rightSidebar = !rightSidebar"
             @width="rightSidebarWidth = $event"
         ></Navbar>
         <div class="player-container__content">
+        
             <div id="player-container__content__main">
                 <add-to-playlist
                     v-if="$store.getters.getAddSongToPlaylist"
                     @end="$store.commit('setAddSongToPlaylist', null)"
                 ></add-to-playlist>
                 <v-container fluid class="player-main-container full-heigth">
+                   
                     <router-view
                         :key="$store.getters.getCurrentPageId"
                     ></router-view>

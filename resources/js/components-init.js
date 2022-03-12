@@ -78,7 +78,7 @@ Vue.component(
 // lists
 Vue.component(
     "song-list",
-    require("./components/elements/lists/songs.vue").default
+    require("./components/elements/lists/Songs.vue").default
 );
 Vue.component(
     "album-list",

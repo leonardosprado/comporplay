@@ -38,4 +38,7 @@ mix
             chunkFilename: 'js/chunks/[chunkhash].js',//replace with your path
         }
     })
+    .options({
+        processCssUrls: false
+    })
     // .browserSync("muzzie.com");

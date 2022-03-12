@@ -1,13 +1,15 @@
-
 <!DOCTYPE html>
 <html lang="{{ $locale }}">
 <head>
     @meta_tags
-    <link rel="preload" href="{{ asset('css/app_33.css') }}" as="style">
+    <!-- <link rel="preload" href="{{ asset('css/app_33.css') }}" as="style"> -->
+    <link rel="preload" href="{{ asset('css/app.css') }}" as="style">
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" as="style">
-    <link rel="preload" href="{{ asset('js/app_33.js') }}" as="script">
+    <!-- <link rel="preload" href="{{ asset('js/app_33.js') }}" as="script"> -->
+    <link rel="preload" href="{{ asset('js/app.js') }}" as="script">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="{{ asset('css/app_33.css') }}" rel="stylesheet">
+    <!-- <link href="{{ asset('css/app_33.css') }}" rel="stylesheet"> -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
     <link rel="manifest" href="{{ asset('manifest.json') }}">
     <link rel="shortcut icon" href="{{ asset('/storage/defaults/images/favicon.png') }}" type="image/x-icon">
@@ -47,7 +49,8 @@ if ('serviceWorker' in navigator) {
 <div id="app">
   <Master />
 </div> 
-<script src="{{ asset('js/app_33.js') }}" defer></script>
+<!-- <script src="{{ asset('js/app_33.js') }}" defer></script> -->
+<script src="{{ asset('js/app.js') }}" defer></script>
 </body>
 </html>
 <style>
