@@ -1,3 +1,4 @@
+/vendor/
 /node_modules
 /public/hot
 /resources/views/welcome.blade.php
@@ -13,4 +14,3 @@ yarn-error.log
 /package-lock.json
 .problems
 .roadmap
-/vendor
