@@ -38,7 +38,7 @@ class Setting extends Model
         'pusherSecret' => '',
         'enableFriendshipSystem' => 1,
         'disableRegistration' => 0,
-        'requireEmailConfirmation' => 0,
+        'requireEmailConfirmation' => 1,
         'defaultTheme' => 'Light',
         'mailMailer' => 'smtp',
         'enableMail' => 0,

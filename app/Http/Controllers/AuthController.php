@@ -21,7 +21,9 @@ class AuthController extends Controller
      * @return \Illuminate\Http\Response
      */
     protected function auth(Request $request)
-    {
+    {   
+        error_log("AUTH: ");
+      
         if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             throw new FEException(__('Your credentials are incorrect. Please try again'), '', 500);
         }
@@ -34,10 +36,19 @@ class AuthController extends Controller
      * @return \Illuminate\Http\Response
      */
     protected function login($user)
-    {
-        
+    {   
+        error_log("LOGIN: ");
+        error_log($user);
+        // ob_start();
+        // var_dump(Auth::user()->email_verified_at);
+        // error_log(ob_get_clean());
         if (!Auth::check()) {
             Auth::login($user);
+        }
+        if(!Auth::user()->email_verified_at ){
+            //Função de Reenviar E-mail de Verificação
+            $user->sendEmailVerificationNotification();
+            throw new FEException(__('E-mail não verificado, verfique sua caixa de e-mail e confirme sua conta!'), '', 500);
         }
         if (!Auth::user()) {
             throw new FEException(__('Your credentials are incorrect. Please try again'), '', 500);
@@ -133,6 +144,7 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
+        error_log(Setting::get('requireEmailConfirmation'));
         $request->validate([
             'name' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
@@ -149,6 +161,7 @@ class AuthController extends Controller
             'available_disk_space' => floatval(Setting::get('availableUserDiskSpace')),
             'lang' => Setting::get('locale')
         ]);
+        
         if (Setting::get('requireEmailConfirmation')) {
             try {
                 $user->sendEmailVerificationNotification();
