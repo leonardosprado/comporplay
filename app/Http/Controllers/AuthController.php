@@ -144,7 +144,6 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
-        error_log(Setting::get('requireEmailConfirmation'));
         $request->validate([
             'name' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
@@ -161,12 +160,14 @@ class AuthController extends Controller
             'available_disk_space' => floatval(Setting::get('availableUserDiskSpace')),
             'lang' => Setting::get('locale')
         ]);
-        
-        if (Setting::get('requireEmailConfirmation')) {
+        // Não sei que etapa configura esse carinha. Então vou colocar ele aqui pra entrar sempre. Posteriormente é bom configurar/ver de onde vem.
+        // if (Setting::get('requireEmailConfirmation')) {
+        if($user){
             try {
                 $user->sendEmailVerificationNotification();
                 return response()->json(['message' => __('We have sent a verification email to the address you provided')], 201);
             } catch (\Exception $e) {
+                error_log($e);
                 $user->delete();
                 return response()->json(['message' => __('Some error occurred while trying to send an email')], 400);
             }
