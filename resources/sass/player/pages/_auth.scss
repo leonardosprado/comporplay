@@ -3,6 +3,7 @@
     color: rgba(0, 0, 0, 0.795) !important;
     background-image: url("/images/background.svg");
     background-color: rgb(243, 243, 243);
+    background-attachment: fixed;
     background-size: cover;
     transition: height 0.5s;
     height: 100%;

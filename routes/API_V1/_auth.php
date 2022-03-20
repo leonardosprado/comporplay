@@ -15,3 +15,5 @@ Route::post('/login', 'AuthController@auth');
 Route::post('login/{driver}/callback', 'AuthController@handleProviderCallback');
 
 Route::post('/register', 'AuthController@register');
+
+Route::post('/register-artistpf', 'AuthController@registerPf');

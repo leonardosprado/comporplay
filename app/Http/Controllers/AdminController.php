@@ -67,7 +67,7 @@ class AdminController extends Controller
         $sitemap->add(URL::to('/'), Carbon::now(), '0.8', 'monthly');
         $sitemap->add(URL::to('/login'),  Carbon::now(), '0.3', 'monthly');
         $sitemap->add(URL::to('/register'),  Carbon::now(), '0.3', 'monthly');
-
+        $sitemap->add(URL::to('/register/compositor'),  Carbon::now(), '0.3', 'monthly');
         $sitemap->add(URL::to('/browse'), Carbon::now(), '0.8', 'monthly');
 
         if (\App\Setting::get('enableCharts')) {

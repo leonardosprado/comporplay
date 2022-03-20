@@ -9,8 +9,12 @@ use Illuminate\Http\Request;
 use Hash;
 use App\Setting;
 use App\User;
+use App\Artist;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\ArtistRequest;
+use App\Http\Resources\ArtistResource;
 
 class AuthController extends Controller
 {
@@ -173,6 +177,90 @@ class AuthController extends Controller
             }
         }
         return response()->json(null, 201);
+    }
+
+    public function registerPf(Request $request)
+    {
+        if (User::where('email', $request->email)->first()) {
+            throw new FEException(__('Account already exists.'), '', 500);
+        }
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'avatar' => FileManager::generateFileData('/storage/defaults/images/user_avatar.png'),
+            'password' => Hash::make($request->password),
+            'available_disk_space' => floatval(Setting::get('availableUserDiskSpace')),
+            'lang' => Setting::get('locale')
+        ]);
+        if($user){
+            try {
+                $avatar = FileManager::asset_path($user->avatar);
+                $artist = Artist::create([
+                    'user_id' => $user->id,
+                    'firstname' => $request->firstname,
+                    'lastname' => $request->lastname,
+                    'displayname' => $request->artistic_name,
+                    'country' => $request->country,
+                    'address' => $request->address,
+                    'phone' => $request->cell_phone,
+                    'email' => $request->email,
+                    'avatar' => $avatar,
+                    'spotify_link' => $request->spotify_link,
+                    'youtube_link' => $request->youtube_link,
+                    'soundcloud_link' => $request->soundcloud_link,
+                    'itunes_link' => $request->itunes_link,
+                    ///Novos
+                    'type_user'=>$request->type_user,
+                    'artistic_name'=>$request->artistic_name,
+                    'cpf'=>$request->cpf,
+                    'rg'=>$request->rg,
+                    'nationality'=>$request->nationality,
+                    'mother_name'=>$request->mother_name,
+                    'name_father'=>$request->name_father,
+                    'marital_status'=>$request->marital_status,
+                    'spouse_name'=>$request->spouse_name,
+                    'cep'=>$request->cep,
+                    'address_number'=>$request->address_number,
+                    'address_complement'=>$request->address_complement,
+                    'address_district'=>$request->address_district,
+                    'address_city'=>$request->address_city,
+                    'address_state'=>$request->address_state,
+                    'cell_phone'=>$request->cell_phone,
+                    'link_instagram'=>$request->link_instagram,
+                    'link_facebook'=>$request->link_facebook,
+                    'number_whatsapp'=>$request->number_whatsapp,
+                    'number_telegram'=>$request->number_telegram,
+                    'link_site'=>$request->link_site,
+                    'sociedade_autoral'=>$request->sociedade_autoral,
+        
+                ]);
+                if($artist){
+                    try{
+                        $admins = User::whereHas('roles', function ($query) {
+                            $query->where('name', 'admin');
+                        })->orWhere('is_admin', 1)->get();
+
+                        Notification::send($admins, new ArtistRequest($user, new ArtistResource($artist)));
+                        $user->requested_artist_account = 1;
+                        $user->save();
+                        return response()->json(['message' => __('Conta de Artista Solicitada com Sucesso, Aguarde a Aprovação')], 201);
+
+                    }
+                    catch(\Exception $e){
+                        error_log($e);
+                        $user->delete();
+                        return response()->json(['message' => __('Erro ao Criar Artista')], 400);
+                    }
+                }
+                
+            } catch (\Exception $e) {
+                error_log($e);
+                $user->delete();
+                return response()->json(['message' => __('Some error occurred while trying to send an email')], 400);
+            }
+        }
+        return response()->json(null, 201);
+
     }
     
     /**
