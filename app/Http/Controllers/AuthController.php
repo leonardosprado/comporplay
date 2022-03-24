@@ -26,7 +26,7 @@ class AuthController extends Controller
      */
     protected function auth(Request $request)
     {   
-        error_log("AUTH: ");
+        error_log("Autenticando.....");
       
         if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             throw new FEException(__('Your credentials are incorrect. Please try again'), '', 500);
@@ -41,11 +41,8 @@ class AuthController extends Controller
      */
     protected function login($user)
     {   
-        error_log("LOGIN: ");
+        error_log("..... Autenticado......");
         error_log($user);
-        // ob_start();
-        // var_dump(Auth::user()->email_verified_at);
-        // error_log(ob_get_clean());
         if (!Auth::check()) {
             Auth::login($user);
         }
@@ -57,9 +54,10 @@ class AuthController extends Controller
         if (!Auth::user()) {
             throw new FEException(__('Your credentials are incorrect. Please try again'), '', 500);
         }
+        error_log(".....Gerando Token......");
         $scopes = $this->userScopes(Auth::user());
         $token = Auth::user()->createToken('access_token', $scopes)->accessToken;
-
+        error_log(".....Token Gerado..........");
         return response(['access_token' => $token]);
     }
 
@@ -212,7 +210,7 @@ class AuthController extends Controller
                     ///Novos
                     'type_user'=>$request->type_user,
                     'artistic_name'=>$request->artistic_name,
-                    'cpf'=>$request->cpf,
+                    'cpfcnpj'=>$request->cpfcnpj,
                     'rg'=>$request->rg,
                     'nationality'=>$request->nationality,
                     'mother_name'=>$request->mother_name,
@@ -239,7 +237,6 @@ class AuthController extends Controller
                         $admins = User::whereHas('roles', function ($query) {
                             $query->where('name', 'admin');
                         })->orWhere('is_admin', 1)->get();
-
                         Notification::send($admins, new ArtistRequest($user, new ArtistResource($artist)));
                         $user->requested_artist_account = 1;
                         $user->save();
@@ -256,7 +253,88 @@ class AuthController extends Controller
             } catch (\Exception $e) {
                 error_log($e);
                 $user->delete();
-                return response()->json(['message' => __('Some error occurred while trying to send an email')], 400);
+                return response()->json(['message' => __('Erro ao Criar Artista')], 400);
+            }
+        }
+        return response()->json(null, 201);
+
+    }
+
+
+    public function registerPj(Request $request)
+    {
+        if (User::where('email', $request->email)->first()) {
+            throw new FEException(__('Account already exists.'), '', 500);
+        }
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'avatar' => FileManager::generateFileData('/storage/defaults/images/user_avatar.png'),
+            'password' => Hash::make($request->password),
+            'available_disk_space' => floatval(Setting::get('availableUserDiskSpace')),
+            'lang' => Setting::get('locale')
+        ]);
+        if($user){
+            try {
+                $avatar = FileManager::asset_path($user->avatar);
+                $artist = Artist::create([
+                    'user_id' => $user->id,
+                    'avatar' => $avatar,
+                    'email' => $request->email,
+                    'type_user'=>$request->type_user,
+                    'razao_social'=>$request->razaosocial,
+                    'fantasia'=>$request->nome_fantasia,
+                    'firstname' => $request->firstname,
+                    'lastname' => $request->lastname,
+                    'displayname' => $request->artistic_name,
+                    'artistic_name'=>$request->artistic_name,
+                    'cpfcnpj'=>$request->cpfcnpj,
+                    'rg'=>$request->rg,
+                    'country' => $request->country,
+                    'nationality'=>$request->nationality,
+                    'cep'=>$request->cep,
+                    'address' => $request->address,
+                    'address_number'=>$request->address_number,
+                    'address_complement'=>$request->address_complement,
+                    'address_district'=>$request->address_district,
+                    'address_city'=>$request->address_city,
+                    'address_state'=>$request->address_state,
+                    'phone' => $request->cell_phone,
+                    'link_instagram'=>$request->link_instagram,
+                    'link_facebook'=>$request->link_facebook,
+                    'number_whatsapp'=>$request->number_whatsapp,
+                    'spotify_link' => $request->spotify_link,
+                    'number_telegram'=>$request->number_telegram,
+                    'link_site'=>$request->link_site,
+                    'sociedade_autoral'=>$request->sociedade_autoral,
+                    'youtube_link' => $request->youtube_link,
+                    'cell_phone'=>$request->cell_phone,
+                    'soundcloud_link' => $request->soundcloud_link,
+                    'itunes_link' => $request->itunes_link,
+        
+                ]);
+                if($artist){
+                    try{
+                        $admins = User::whereHas('roles', function ($query) {
+                            $query->where('name', 'admin');
+                        })->orWhere('is_admin', 1)->get();
+                        Notification::send($admins, new ArtistRequest($user, new ArtistResource($artist)));
+                        $user->requested_artist_account = 1;
+                        $user->save();
+                        return response()->json(['message' => __('Conta de Artista PJ Solicitada com Sucesso, Aguarde a Aprovação')], 201);
+
+                    }
+                    catch(\Exception $e){
+                        error_log($e);
+                        $user->delete();
+                        return response()->json(['message' => __('Erro ao Criar Artista PJ')], 400);
+                    }
+                }
+                
+            } catch (\Exception $e) {
+                error_log($e);
+                $user->delete();
+                return response()->json(['message' => __('Erro ao Criar Artista PJ')], 400);
             }
         }
         return response()->json(null, 201);

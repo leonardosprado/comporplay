@@ -1,5 +1,7 @@
 <template>
-<authentificationTemplate>
+<authentificationTemplate maxWidth="800px">
+    
+    
     <div class="register-wrapper">
         <div class="auth-box__title">
             <h2>{{ $t("Registrar Compositor(a) - Pessoa Fisíca") }}</h2>
@@ -34,7 +36,7 @@
                             <v-text-field v-model="rg" :rules="[rules.required]" :label="$t('RG')" outlined></v-text-field>
                         </v-col>
                         <v-col cols="4">
-                            <v-text-field v-model="cpf" :rules="[rules.required]" :label="$t('CPF')" outlined></v-text-field>
+                            <v-text-field v-model="cpfcnpj" :rules="[rules.required]" :label="$t('CPF')" outlined></v-text-field>
                         </v-col>
                         <v-col cols="4">
                             <v-text-field v-model="nascimento" :rules="[rules.required]" :label="$t('Nascimento')" outlined></v-text-field>
@@ -163,6 +165,8 @@
             </div>
         </v-container>
     </div>
+        
+   
 </authentificationTemplate>
 </template>
 
@@ -185,7 +189,7 @@ export default {
             name:this.firstname +" "+ this.lastname,
             nameArtistico: "Nome Artistico",
             rg: "646464",
-            cpf: "70246673117",
+            cpfcnpj: "70246673117",
             pais:"BR",
             nacionalidade: "br",
             nome_mae: "mãe",
@@ -236,7 +240,7 @@ export default {
                         name: this.firstname +" "+ this.lastname,
                         type_user:"pf",
                         artistic_name:this.nameArtistico,
-                        cpf:this.cpf,
+                        cpfcnpj:this.cpfcnpj,
                         rg:this.rg,
                         country:this.pais,
                         nationality:this.nacionalidade,
@@ -255,6 +259,7 @@ export default {
                         link_instagram:this.link_instagram,
                         link_facebook:this.link_facebook,
                         number_whatsapp:this.telefone,
+                        spotify_link:'#',
                         number_telegram:'0',
                         link_site:this.link_site,
                         sociedade_autoral:this.sociedade_autoral,
