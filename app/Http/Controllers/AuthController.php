@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\ArtistRequest;
 use App\Http\Resources\ArtistResource;
+use GuzzleHttp\Client;
 
 class AuthController extends Controller
 {
@@ -182,6 +183,19 @@ class AuthController extends Controller
         if (User::where('email', $request->email)->first()) {
             throw new FEException(__('Account already exists.'), '', 500);
         }
+
+        $request->validate([
+            'name' => 'required|string|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8',
+            'artistic_name' => 'required|string|max:255',
+            'cpfcnpj' => 'required|max:255',
+            'rg' => 'required|max:255',
+            'birth_date' => 'required|max:255',
+            'cep' => 'required|max:255',
+            'address_number' => 'required|max:255',
+        ]);
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -202,12 +216,12 @@ class AuthController extends Controller
                     'address' => $request->address,
                     'phone' => $request->cell_phone,
                     'email' => $request->email,
-                    'avatar' => $avatar,
+                    'birth_date'=>$request->birth_date,
+                    'avatar' =>  FileManager::generateFileData('/storage/defaults/images/user_avatar.png'),
                     'spotify_link' => $request->spotify_link,
                     'youtube_link' => $request->youtube_link,
                     'soundcloud_link' => $request->soundcloud_link,
                     'itunes_link' => $request->itunes_link,
-                    ///Novos
                     'type_user'=>$request->type_user,
                     'artistic_name'=>$request->artistic_name,
                     'cpfcnpj'=>$request->cpfcnpj,
@@ -266,6 +280,12 @@ class AuthController extends Controller
         if (User::where('email', $request->email)->first()) {
             throw new FEException(__('Account already exists.'), '', 500);
         }
+        $request->validate([
+            'name' => 'required|string|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8',
+        ]);
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -279,7 +299,7 @@ class AuthController extends Controller
                 $avatar = FileManager::asset_path($user->avatar);
                 $artist = Artist::create([
                     'user_id' => $user->id,
-                    'avatar' => $avatar,
+                    'avatar' =>  FileManager::generateFileData('/storage/defaults/images/user_avatar.png'),
                     'email' => $request->email,
                     'type_user'=>$request->type_user,
                     'razao_social'=>$request->razaosocial,
@@ -351,5 +371,11 @@ class AuthController extends Controller
         $token = \Auth::user()->token();
         $token->revoke();
         return response()->json(__('Logged out successfully.'), 200);
+    }
+
+    public function cepSearch(Client $client, string $cep) {
+        $response = $client->get("https://viacep.com.br/ws/{$cep}/json/");
+
+        return json_decode($response->getBody(), true);
     }
 }

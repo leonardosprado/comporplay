@@ -19,14 +19,14 @@
                 <v-col cols="12" class="auth-box__inputs">
                     <div class="divider wide-divider pb-3 mt-1"></div>
                     <v-row>
-                        <v-col cols="4">
+                        <v-col cols="12" md="4">
                             <v-text-field v-model="razaosocial" :rules="[rules.required]" :label="$t('Razão Social')" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="4">
+                        <v-col cols="12" md="4">
                             <v-text-field v-model="nome_fantasia" :rules="[rules.required]" :label="$t('Nome Fantasia')" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="4">
-                            <v-text-field v-model="cnpj" :rules="[rules.required]" :label="$t('CNPJ')" outlined></v-text-field>
+                        <v-col cols="12" md="4">
+                            <v-text-field v-model="cnpj" :label="$t('CNPJ')" outlined></v-text-field>
                         </v-col>
                     </v-row>
 
@@ -34,77 +34,77 @@
                     <div class="divider wide-divider pb-3 mt-1"></div>
                     <div class="bold text-center"></div>
                     <v-row>
-                        <v-col cols="3">
+                        <v-col cols="6" md="3">
                             <v-text-field v-model="cep" :rules="[rules.required]" :label="$t('CEP')" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col cols="9" md="6">
                             <v-text-field v-model="endereco" :rules="[rules.required]" :label="$t('Endereço')" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="3">
+                        <v-col cols="3" md="3">
                             <v-text-field v-model="numero" :rules="[rules.required]" :label="$t('Numero')" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col cols="12" md="6">
                             <v-text-field v-model="complemento" :label="$t('Complemento')" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col cols="6" md="6">
                             <v-text-field v-model="bairro" :label="$t('Bairro')" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col cols="6" md="6">
                             <v-text-field v-model="cidade" :label="$t('Cidade')" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col cols="6" md="6">
                             <v-text-field v-model="estado" :label="$t('Estado')" outlined></v-text-field>
                         </v-col>
                     </v-row>
                     <h3 class="mb-0 pb-0">{{ $t("Responsável Legal") }}</h3>
                     <div class="divider wide-divider pb-3 mt-1"></div>
                     <v-row>
-                        <v-col cols="6">
+                        <v-col cols="12" md="6">
                             <v-text-field v-model="firstname" :rules="[rules.required]" :label="$t('Primeiro Nome')" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col cols="12" md="6">
                             <v-text-field v-model="lastname" :rules="[rules.required]" :label="$t('Ultimo Nome')" outlined></v-text-field>
                         </v-col>
                         
                     </v-row>
                     <v-row>
-                        <v-col cols="4">
+                        <v-col cols="6" md="4">
                             <v-text-field v-model="rg" :rules="[rules.required]" :label="$t('RG')" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="4">
+                        <v-col cols="12" md="4">
                             <v-text-field v-model="cpfcnpj" :rules="[rules.required]" :label="$t('CPF')" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="4">
+                        <v-col cols="6" md="4">
                             <v-text-field v-model="nascimento" :rules="[rules.required]" :label="$t('Nascimento')" outlined></v-text-field>
                         </v-col>
                     </v-row>
                     <v-row>
-                        <v-col cols="4">
+                        <v-col cols="6" md="6">
                             <v-text-field v-model="pais" :rules="[rules.required]" :label="$t('País')" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="4">
+                        <v-col cols="6" md="6">
                             <v-text-field v-model="nacionalidade" :rules="[rules.required]" :label="$t('Nacionalidade')" outlined></v-text-field>
                         </v-col>
                     </v-row>
                     <div class="divider wide-divider pb-3"></div>
 
                     <v-row>
-                        <v-col cols="6">
+                        <v-col cols="12" md="6">
                             <v-text-field v-model="telefone" :rules="[rules.required]" :label="$t('Telefone')" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col cols="12" md="6">
                             <v-text-field v-model="celular" :rules="[rules.required]" :label="$t('Celular')" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col cols="12" md="6">
                             <v-text-field v-model="link_instagram" :rules="[rules.required]" :label="$t('Perfil no Instagram (link)')" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col cols="12" md="6">
                             <v-text-field v-model="link_facebook" :label="$t('Perfil no Facebook (link)')" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col cols="12" md="6">
                             <v-text-field v-model="link_site" :label="$t('Site')" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col cols="12" md="6">
                             <v-text-field v-model="sociedade_autoral" :label="$t('Sociedade Autoral')" outlined></v-text-field>
                         </v-col>
                     </v-row>
@@ -176,37 +176,37 @@ export default {
     },
     data() {
         return {
-            email: "leonardoprado19@outlook.com",
+            email: "",
             razaosocial:"",
             nome_fantasia:"",
             cnpj:"",
-            firstname:"Exemplo 1",
-            lastname:"Exemplo 2",
+            firstname:"",
+            lastname:"",
             name:this.firstname +" "+ this.lastname,
-            nameArtistico: "Nome Artistico",
-            rg: "646464",
-            cpfcnpj: "70246673117",
-            pais:"BR",
-            nacionalidade: "br",
-            nome_mae: "mãe",
-            nome_pai: "pai",
-            estado_civil: "solteiro",
-            nome_conjugue: "nãotem",
-            cep: "70830290",
-            endereco: "Rua tal",
-            numero: "3",
-            complemento: "Qd.202",
-            bairro:"SPL",
-            cidade:"goiânia",
-            estado:"Goiás",
-            telefone: "62982732049",
-            celular: "62982732049",
+            nameArtistico: "",
+            rg: "",
+            cpfcnpj: "",
+            pais:"",
+            nacionalidade: "",
+            nome_mae: "",
+            nome_pai: "",
+            estado_civil: "",
+            nome_conjugue: "",
+            cep: "",
+            endereco: "",
+            numero: "",
+            complemento: "",
+            bairro:"",
+            cidade:"",
+            estado:"",
+            telefone: "",
+            celular: "",
             link_instagram: "https://instagram.com",
             link_facebook: "https://facebook.com",
-            link_site:"https://grupoponto.com.br",
-            sociedade_autoral:"AOS",
-            password1: "12345678",
-            password2: "12345678",
+            link_site:"",
+            sociedade_autoral:"",
+            password1: "",
+            password2: "",
             error: "",
             success: "",
             loading: false,
@@ -264,17 +264,43 @@ export default {
                         this.success = res.data.message ||this.$t("Account created successfully. You can login now.");
                     })
                     .catch((e) => {
-                        // if (e.response.data.errors) {
-                        //     this.error = Object.values(
-                        //         e.response.data.errors
-                        //     )[0];
-                        // } else {
-                        //     this.error = e.response.data;
-                        // }
+                        if (e.response.data.errors) {
+                            this.error = Object.values(
+                                e.response.data.errors
+                            )[0];
+                        } else {
+                            this.error = e.response.data;
+                        }
                     })
                     .finally(() => (this.loading = false));
             }
         },
+        cepCorreios(){
+
+            axios.get(`/api/address/${this.cep}`)
+            .then((res)=>{
+                console.log(res);
+                this.bairro = res.data.bairro;
+                this.cidade = res.data.localidade;
+                this.endereco = res.data.logradouro;
+                this.estado = res.data.uf;
+            })
+            .catch((e)=>{
+                console.log(e);
+                this.$notify({
+                    type: "error",
+                    group: "foo",
+                    message: "API de CEP Fora do ar! Digite Manualmente"
+                });
+            });
+        }
+    },
+    watch: {
+        cep(newCep,oldCep){
+            if(newCep.length >= 8 && newCep.length < 9){
+                this.cepCorreios();
+            }
+        }
     }
 }
 </script>

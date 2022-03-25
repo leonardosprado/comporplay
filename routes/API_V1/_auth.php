@@ -18,3 +18,6 @@ Route::post('/register', 'AuthController@register');
 
 Route::post('/register-artistpf', 'AuthController@registerPf');
 Route::post('/register-artistpj', 'AuthController@registerPj');
+
+Route::get('address/{cep}', 'AuthController@cepSearch');
+

@@ -21,43 +21,43 @@
 
                     <div class="divider wide-divider pb-3 mt-1"></div>
                     <v-row>
-                        <v-col cols="6">
+                        <v-col cols="12" md="6">
                             <v-text-field v-model="firstname" :rules="[rules.required]" :label="$t('Primeiro Nome')" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col cols="12" md="6">
                             <v-text-field v-model="lastname" :rules="[rules.required]" :label="$t('Ultimo Nome')" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col cols="12" md="6">
                             <v-text-field v-model="nameArtistico" :rules="[rules.required]" :label="$t('Nome Artistico')" outlined></v-text-field>
                         </v-col>
                     </v-row>
                     <v-row>
-                        <v-col cols="4">
+                        <v-col cols="12" md="4">
                             <v-text-field v-model="rg" :rules="[rules.required]" :label="$t('RG')" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="4">
+                        <v-col cols="12" md="4">
                             <v-text-field v-model="cpfcnpj" :rules="[rules.required]" :label="$t('CPF')" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="4">
-                            <v-text-field v-model="nascimento" :rules="[rules.required]" :label="$t('Nascimento')" outlined></v-text-field>
+                        <v-col cols="12" md="4">
+                            <v-text-field  type="date" v-model="nascimento" :rules="[rules.required]" :label="$t('Nascimento')" outlined></v-text-field>
                         </v-col>
                     </v-row>
                     <v-row>
-                        <v-col cols="4">
+                        <v-col cols="6" md="4">
                             <v-text-field v-model="pais" :rules="[rules.required]" :label="$t('País')" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="4">
+                        <v-col cols="6" md="4">
                             <v-text-field v-model="nacionalidade" :rules="[rules.required]" :label="$t('Nacionalidade')" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="4">
+                        <v-col cols="6" md="4">
                             <v-text-field v-model="nome_mae" :rules="[rules.required]" :label="$t('Nome da mãe')" outlined></v-text-field>
                         </v-col>
                     </v-row>
                     <v-row>
-                        <v-col cols="6">
+                        <v-col cols="12" md="6">
                             <v-text-field v-model="nome_pai" :rules="[rules.required]" :label="$t('Nome do pai')" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col cols="12" md="6">
                             <v-text-field v-model="estado_civil" :rules="[rules.required]" :label="$t('Estado Civil')" outlined></v-text-field>
                         </v-col>
                     </v-row>
@@ -71,25 +71,25 @@
                     <div class="divider wide-divider pb-3 mt-1"></div>
                     <div class="bold text-center"></div>
                     <v-row>
-                        <v-col cols="4">
-                            <v-text-field v-model="cep" :rules="[rules.required]" :label="$t('CEP')" outlined></v-text-field>
+                        <v-col cols="6" md="4">
+                            <v-text-field  v-model="cep" :rules="[rules.required]" :label="$t('CEP')"  outlined></v-text-field>
                         </v-col>
-                        <v-col cols="8">
+                        <v-col cols="6" md="8">
                             <v-text-field v-model="endereco" :rules="[rules.required]" :label="$t('Endereço')" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="4">
+                        <v-col cols="6" md="4">
                             <v-text-field v-model="numero" :rules="[rules.required]" :label="$t('Numero')" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="8">
+                        <v-col cols="8" md="8">
                             <v-text-field v-model="complemento" :label="$t('Complemento')" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col cols="12" md="6">
                             <v-text-field v-model="bairro" :label="$t('Bairro')" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col cols="12" md="6">
                             <v-text-field v-model="cidade" :label="$t('Cidade')" outlined></v-text-field>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col cols="12" md="6">
                             <v-text-field v-model="estado" :label="$t('Estado')" outlined></v-text-field>
                         </v-col>
                     </v-row>
@@ -171,6 +171,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import authentificationTemplate from "../templates/Authentication";
 export default {
     metaInfo: {
@@ -183,34 +184,35 @@ export default {
     },
     data() {
         return {
-            email: "leonardoprado19@outlook.com",
-            firstname:"Exemplo 1",
-            lastname:"Exemplo 2",
+            email: "",
+            firstname:"",
+            lastname:"",
             name:this.firstname +" "+ this.lastname,
-            nameArtistico: "Nome Artistico",
-            rg: "646464",
-            cpfcnpj: "70246673117",
-            pais:"BR",
-            nacionalidade: "br",
-            nome_mae: "mãe",
-            nome_pai: "pai",
-            estado_civil: "solteiro",
-            nome_conjugue: "nãotem",
-            cep: "70830290",
-            endereco: "Rua tal",
-            numero: "3",
-            complemento: "Qd.202",
-            bairro:"SPL",
-            cidade:"goiânia",
-            estado:"Goiás",
-            telefone: "62982732049",
-            celular: "62982732049",
+            nameArtistico: "",
+            rg: "",
+            nascimento:"",
+            cpfcnpj: "",
+            pais:"",
+            nacionalidade: "",
+            nome_mae: "",
+            nome_pai: "",
+            estado_civil: "",
+            nome_conjugue: "",
+            cep: "",
+            endereco: "",
+            numero: "",
+            complemento: "",
+            bairro:"",
+            cidade:"",
+            estado:"",
+            telefone: "",
+            celular: "",
             link_instagram: "https://instagram.com",
             link_facebook: "https://facebook.com",
             link_site:"https://grupoponto.com.br",
-            sociedade_autoral:"AOS",
-            password1: "12345678",
-            password2: "12345678",
+            sociedade_autoral:"",
+            password1: "",
+            password2: "",
             error: "",
             success: "",
             loading: false,
@@ -225,6 +227,11 @@ export default {
     },
     methods: {
         register() {
+    //    this.$notify({
+    //         group: 'foo',
+    //         title: 'Important message',
+    //         text: 'Hello user! This is a notification!'
+    //         });
             this.error = "";
             this.loading = true;
             if (this.password1 !== this.password2) {
@@ -242,6 +249,7 @@ export default {
                         artistic_name:this.nameArtistico,
                         cpfcnpj:this.cpfcnpj,
                         rg:this.rg,
+                        birth_date:this.nascimento,
                         country:this.pais,
                         nationality:this.nacionalidade,
                         mother_name:this.nome_mae,
@@ -267,19 +275,61 @@ export default {
                     .then((res) => {
                         console.log(res);
                         this.success = res.data.message ||this.$t("Account created successfully. You can login now.");
+                        this.$notify({
+                            type: "sucess",
+                            group: "foo",
+                            message: res.data.message ||this.$t("Account created successfully. You can login now.")
+                        });
                     })
                     .catch((e) => {
-                        // if (e.response.data.errors) {
-                        //     this.error = Object.values(
-                        //         e.response.data.errors
-                        //     )[0];
-                        // } else {
-                        //     this.error = e.response.data;
-                        // }
+                        if (e.response.data.errors) {
+                            // this.error = Object.values(
+                            //     e.response.data.errors
+                            // )[0];
+                            this.$notify({
+                                type: "error",
+                                group: "foo",
+                                message: Object.values(
+                                e.response.data.errors)[0]
+                            });
+                        } else {
+                            // this.error = e.response.data;
+                            this.$notify({
+                                type: "error",
+                                group: "foo",
+                                message: e.response.data
+                            });
+                        }
                     })
                     .finally(() => (this.loading = false));
             }
         },
+        cepCorreios(){
+
+            axios.get(`/api/address/${this.cep}`)
+            .then((res)=>{
+                console.log(res);
+                this.bairro = res.data.bairro;
+                this.cidade = res.data.localidade;
+                this.endereco = res.data.logradouro;
+                this.estado = res.data.uf;
+            })
+            .catch((e)=>{
+                console.log(e);
+                this.$notify({
+                    type: "error",
+                    group: "foo",
+                    message: "API de CEP Fora do ar! Digite Manualmente"
+                });
+            });
+        }
+    },
+    watch: {
+        cep(newCep,oldCep){
+            if(newCep.length >= 8 && newCep.length < 9){
+                this.cepCorreios();
+            }
+        }
     }
 }
 </script>
