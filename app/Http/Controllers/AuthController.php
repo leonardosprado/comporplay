@@ -284,6 +284,7 @@ class AuthController extends Controller
             'name' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
+            'cnpj'=>'required|string|min:8',
         ]);
 
         $user = User::create([
@@ -304,6 +305,7 @@ class AuthController extends Controller
                     'type_user'=>$request->type_user,
                     'razao_social'=>$request->razaosocial,
                     'fantasia'=>$request->nome_fantasia,
+                    'cnpj'=>$request->cnpj,
                     'firstname' => $request->firstname,
                     'lastname' => $request->lastname,
                     'displayname' => $request->artistic_name,

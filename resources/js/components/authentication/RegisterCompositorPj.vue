@@ -238,6 +238,7 @@ export default {
                         cnpj:this.cnpj,
                         firstname:this.firstname,
                         lastname:this.lastname,
+                        displayname:this.nameArtistico,
                         artistic_name:this.nameArtistico,
                         cpfcnpj:this.cpfcnpj,
                         rg:this.rg,
@@ -251,6 +252,7 @@ export default {
                         address_city:this.cidade,
                         address_state:this.estado,
                         cell_phone:this.telefone,
+                        cell_phone:this.phone,
                         link_instagram:this.link_instagram,
                         link_facebook:this.link_facebook,
                         number_whatsapp:this.telefone,
@@ -262,14 +264,30 @@ export default {
                     .then((res) => {
                         console.log(res);
                         this.success = res.data.message ||this.$t("Account created successfully. You can login now.");
+                        this.$notify({
+                            type: "sucess",
+                            group: "foo",
+                            message: res.data.message ||this.$t("Account created successfully. You can login now.")
+                        });
                     })
                     .catch((e) => {
                         if (e.response.data.errors) {
                             this.error = Object.values(
                                 e.response.data.errors
                             )[0];
+                            this.$notify({
+                                type: "error",
+                                group: "foo",
+                                message: Object.values(
+                                e.response.data.errors)[0]
+                            });
                         } else {
                             this.error = e.response.data;
+                             this.$notify({
+                                type: "error",
+                                group: "foo",
+                                message: e.response.data
+                            });
                         }
                     })
                     .finally(() => (this.loading = false));
