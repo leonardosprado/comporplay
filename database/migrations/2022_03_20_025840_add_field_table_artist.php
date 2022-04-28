@@ -37,11 +37,6 @@ class AddFieldTableArtist extends Migration
             $table->string('number_whatsapp')->nullable();
             $table->string('number_telegram')->nullable();
             $table->string('link_site')->nullable();
-            $table->string('spotify_link')->nullable();
-            $table->string('soundcloud_link')->nullable();
-            $table->string('youtube_link')->nullable();
-            $table->string('itunes_link')->nullable();
-            $table->string('deezer_link')->nullable();
             $table->string('sociedade_autoral')->nullable();
             //Empresa
             $table->string('razao_social');
@@ -83,11 +78,6 @@ class AddFieldTableArtist extends Migration
             $table->dropColumn('number_whatsapp');
             $table->dropColumn('number_telegram');
             $table->dropColumn('link_site');
-            $table->dropColumn('spotify_link');
-            $table->dropColumn('soundcloud_link');
-            $table->dropColumn('youtube_link');
-            $table->dropColumn('itunes_link');
-            $table->dropColumn('deezer_link');
             $table->dropColumn('sociedade_autoral');
             //Empresa
             $table->dropColumn('razao_social');

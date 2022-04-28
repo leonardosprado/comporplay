@@ -44,10 +44,19 @@ class AuthController extends Controller
     {   
         error_log("..... Autenticado......");
         error_log($user);
-        if (!Auth::check()) {
+        if(!Auth::check()) {
             Auth::login($user);
         }
-        if(!Auth::user()->email_verified_at ){
+        if(Artist::where('user_id', $user->id)->first()){
+            $artist = Artist::where('user_id', $user->id)->first();
+            error_log($artist);
+            if($artist->approved_account_artists != 1 && $user->is_admin != 1){
+                throw new FEException(__('Conta de artista não verificada! Contate um de nossos administradores para ativar'), '', 500);
+            }
+            // die;
+            // throw new FEException(__('Usuário é um Artista! Hehehehe'), '', 500);
+        }
+        if(!Auth::user()->email_verified_at){
             //Função de Reenviar E-mail de Verificação
             $user->sendEmailVerificationNotification();
             throw new FEException(__('E-mail não verificado, verfique sua caixa de e-mail e confirme sua conta!'), '', 500);
@@ -55,6 +64,9 @@ class AuthController extends Controller
         if (!Auth::user()) {
             throw new FEException(__('Your credentials are incorrect. Please try again'), '', 500);
         }
+        // if(!Auth::user()->email_verified_at && Auth::user()->requested_artist_account){
+        //     throw new FEException(__('Aguardando Aprovação da Conta'), '', 500);
+        // }
         error_log(".....Gerando Token......");
         $scopes = $this->userScopes(Auth::user());
         $token = Auth::user()->createToken('access_token', $scopes)->accessToken;

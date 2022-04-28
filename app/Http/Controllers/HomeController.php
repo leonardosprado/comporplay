@@ -429,7 +429,6 @@ class HomeController extends Controller
      */
     public function SPA(Request $request)
     {
-
         if (!file_exists(storage_path('installed'))) {
             error_log('Vai intalar agora!');
             return redirect()->route('installer');

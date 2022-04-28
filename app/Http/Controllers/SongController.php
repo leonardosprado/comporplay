@@ -110,8 +110,6 @@ class SongController extends Controller
         $song = new Song();
         $cover =  FileManager::store($request, '/covers/songs/', 'cover');
 
-
-
         // return response()->download($tempImage, $filename);
         if ($request->source_format === 'file') {
             if ($request->file('source')) {
@@ -197,7 +195,7 @@ class SongController extends Controller
         $song->cover = $cover;
         $song->file_size = $file_size;
         $song->duration = $request->duration;
-
+        
         if( $request->uploaded_by === "artist" ) {
             $song->artist_id = auth()->user()->artist->id;
         }
@@ -206,7 +204,9 @@ class SongController extends Controller
         $song->isProduct  =  $request->isProduct;
         $song->isExclusive  =  $request->isExclusive;
         $song->isExplicit  =  $request->isExplicit;
-        // 
+
+        //New update Leo 
+        $song->is_admin_approved = $request->isApproved;
 
         // links
         $song->spotify_link = $request->spotify_link;

@@ -44,26 +44,59 @@
                     </v-row>
                     <v-row>
                         <v-col cols="6" md="4">
-                            <v-text-field v-model="pais" :rules="[rules.required]" :label="$t('País')" outlined></v-text-field>
+                            <!-- <v-text-field v-model="pais" :rules="[rules.required]" :label="$t('País')" outlined></v-text-field> -->
+                            <v-autocomplete
+                                ref="pais"
+                                v-model="pais"
+                                :rules="[() => !!pais || 'This field is required']"
+                                :items="coutries"
+                                item-value="nome_pais"
+                                item-text="nome_pais"
+                                label="Pais"
+                                placeholder="Select..." 
+                                required
+                            ></v-autocomplete>
                         </v-col>
                         <v-col cols="6" md="4">
-                            <v-text-field v-model="nacionalidade" :rules="[rules.required]" :label="$t('Nacionalidade')" outlined></v-text-field>
+                            <v-autocomplete
+                                ref="pais"
+                                v-model="nacionalidade"
+                                :rules="[() => !!nacionalidade || 'This field is required']"
+                                :items="coutries"
+                                item-value="gentilico"
+                                item-text="gentilico"
+                                label="Nacionalidade"
+                                placeholder="Select..." 
+                                required
+                            ></v-autocomplete>
+                            <!-- <v-text-field v-model="nacionalidade" :rules="[rules.required]" :label="$t('Nacionalidade')" outlined></v-text-field> -->
                         </v-col>
                         <v-col cols="6" md="4">
-                            <v-text-field v-model="nome_mae" :rules="[rules.required]" :label="$t('Nome da mãe')" outlined></v-text-field>
+                            <v-text-field v-model="nome_mae"  :label="$t('Nome da mãe')" outlined></v-text-field>
                         </v-col>
                     </v-row>
                     <v-row>
                         <v-col cols="12" md="6">
-                            <v-text-field v-model="nome_pai" :rules="[rules.required]" :label="$t('Nome do pai')" outlined></v-text-field>
+                            <v-text-field v-model="nome_pai"  :label="$t('Nome do pai')" outlined></v-text-field>
                         </v-col>
                         <v-col cols="12" md="6">
-                            <v-text-field v-model="estado_civil" :rules="[rules.required]" :label="$t('Estado Civil')" outlined></v-text-field>
+                            <!-- <v-text-field v-model="estado_civil" :rules="[rules.required]" abel="$t('Estado Civil')" outlined></v-text-field> -->
+                            <v-autocomplete
+                                ref="estado_civil"
+                                v-model="estado_civil"
+                                :rules="[() => !!estado_civil || 'This field is required']"
+                                :items="EstadoCivil"
+                                item-value="tipoEstadoCivilCod"
+                                item-text="nome"
+                                :label="$t('Estado Civil')" 
+                                placeholder="Select..." 
+                                required
+                            ></v-autocomplete>
                         </v-col>
                     </v-row>
                     <v-row>
                         <v-col cols="6">
-                            <v-text-field v-model="nome_conjugue" :rules="[rules.required]" :label="$t('Nome do Conjugue')" outlined></v-text-field>
+                            <v-text-field v-model="nome_conjugue" :label="$t('Nome do Conjugue')" outlined></v-text-field>
                         </v-col>
                     </v-row>
 
@@ -100,10 +133,10 @@
                             <v-text-field v-model="telefone" :rules="[rules.required]" :label="$t('Telefone')" outlined></v-text-field>
                         </v-col>
                         <v-col cols="6">
-                            <v-text-field v-model="celular" :rules="[rules.required]" :label="$t('Celular')" outlined></v-text-field>
+                            <v-text-field v-model="celular" :label="$t('Celular')" outlined></v-text-field>
                         </v-col>
                         <v-col cols="6">
-                            <v-text-field v-model="link_instagram" :rules="[rules.required]" :label="$t('Perfil no Instagram (link)')" outlined></v-text-field>
+                            <v-text-field v-model="link_instagram"  :label="$t('Perfil no Instagram (link)')" outlined></v-text-field>
                         </v-col>
                         <v-col cols="6">
                             <v-text-field v-model="link_facebook" :label="$t('Perfil no Facebook (link)')" outlined></v-text-field>
@@ -173,6 +206,9 @@
 <script>
 import axios from 'axios';
 import authentificationTemplate from "../templates/Authentication";
+import Coutries from '../../data/coutries';
+import EstadoCivil from '../../data/estadocivil';
+
 export default {
     metaInfo: {
         title: window.Settings.find((set) => set.key === "appName").value +
@@ -184,6 +220,8 @@ export default {
     },
     data() {
         return {
+            coutries:Coutries,
+            EstadoCivil:EstadoCivil,
             email: "",
             firstname:"",
             lastname:"",
@@ -192,7 +230,7 @@ export default {
             rg: "",
             nascimento:"",
             cpfcnpj: "",
-            pais:"",
+            pais:'Brazil',
             nacionalidade: "",
             nome_mae: "",
             nome_pai: "",
@@ -207,9 +245,9 @@ export default {
             estado:"",
             telefone: "",
             celular: "",
-            link_instagram: "https://instagram.com",
-            link_facebook: "https://facebook.com",
-            link_site:"https://grupoponto.com.br",
+            link_instagram: "",
+            link_facebook: "",
+            link_site:"",
             sociedade_autoral:"",
             password1: "",
             password2: "",
@@ -227,11 +265,6 @@ export default {
     },
     methods: {
         register() {
-    //    this.$notify({
-    //         group: 'foo',
-    //         title: 'Important message',
-    //         text: 'Hello user! This is a notification!'
-    //         });
             this.error = "";
             this.loading = true;
             if (this.password1 !== this.password2) {
@@ -282,7 +315,9 @@ export default {
                         });
                     })
                     .catch((e) => {
+                        console.log(e);
                         if (e.response.data.errors) {
+                            console.log("Entrou aqui")
                             // this.error = Object.values(
                             //     e.response.data.errors
                             // )[0];
@@ -293,6 +328,7 @@ export default {
                                 e.response.data.errors)[0]
                             });
                         } else {
+                            console.log("Entrou ali")
                             // this.error = e.response.data;
                             this.$notify({
                                 type: "error",
