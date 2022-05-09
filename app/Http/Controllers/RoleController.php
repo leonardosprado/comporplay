@@ -116,9 +116,16 @@ class RoleController extends Controller
         $user->requested_artist_account = 1;
         $user->save();
         $artist->user_id = $user->id;
-        $artist->save();
-        \DB::table('notifications')->where('id', $request->notification_id)->delete();
-
+        // error_log("LOG: ".$artist->approved_account_artists);
+        // die;
+        if($artist->approved_account_artists == 1){
+            ///Logica Para quando já tiver sido aprovado! 
+        }
+        else{
+            $artist->approved_account_artists = 1;
+            $artist->save();
+            \DB::table('notifications')->where('id', $request->notification_id)->delete();
+        }
         //notify artist that his request was approved
         $from = (object)[
             'name' => auth()->user()->name,

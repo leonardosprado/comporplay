@@ -25,6 +25,11 @@ class CreateArtistsTable extends Migration
             $table->string('country');
             $table->string('email');
             $table->string('phone');
+            $table->string('spotify_link')->nullable();
+            $table->string('soundcloud_link')->nullable();
+            $table->string('youtube_link')->nullable();
+            $table->string('itunes_link')->nullable();
+            $table->string('deezer_link')->nullable();
             $table->bigInteger('available_disk_space')->default(500);
             $table->timestamps();
         });

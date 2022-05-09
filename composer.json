@@ -31,7 +31,8 @@
         "pusher/pusher-php-server": "^4.0",
         "stevebauman/location": "^5.2",
         "stripe/stripe-php": "^7.77",
-        "symfony/dom-crawler": "^5.3"
+        "symfony/dom-crawler": "^5.3",
+        "symfony/symfony": "5.4.x"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

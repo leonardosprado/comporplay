@@ -35,10 +35,34 @@ const router = new VueRouter({
             path: "/register/complete",
             component: () =>
                 import(
-                    /* webpackChunkName: "auth" */ "./components/authentication/CompleteSignup.vue"
+                   "./components/authentication/CompleteSignup.vue"
                 ),
             name: "complete_signup",
             props: true
+        },
+        {
+            path: "/register/compositor", 
+            component: () =>
+                import(
+                    /* webpackChunkName: "auth" */ "./components/authentication/RegisterCompositor.vue"
+                ),
+            name: "register_compositor"
+        },
+        {
+            path: "/register/compositor/pf", 
+            component: () =>
+                import(
+                    /* webpackChunkName: "auth" */ "./components/authentication/RegisterCompositorPf.vue"
+                ),
+            name: "register_compositor_pf"
+        },
+        {
+            path: "/register/compositor/pj", 
+            component: () =>
+                import(
+                    /* webpackChunkName: "auth" */ "./components/authentication/RegisterCompositorPj.vue"
+                ),
+            name: "register_compositor_pj"
         },
         {
             path: "/register",
@@ -814,7 +838,12 @@ router.beforeEach((to, from, next) => {
         to.name !== "landing" &&
         to.name !== "complete_signup" &&
         to.name !== "forgot_password" &&
-        to.name !== "reset_password"
+        to.name !== "reset_password" &&
+        to.name !== "register_compositor" &&
+        to.name !== "register_compositor_pj" &&
+        to.name !== "register_compositor_pf"
+
+
     ) {
         return next({ name: "login" });
     }

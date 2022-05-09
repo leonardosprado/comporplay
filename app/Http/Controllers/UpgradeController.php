@@ -11,6 +11,7 @@ class UpgradeController extends Controller
 {
     public function update($version)
     {
+        error_log(storage_path('installed'));
         if (file_exists(storage_path('installed'))) {
             if ($version == '3.3' && !Setting::get('software_version')) {
                 try {

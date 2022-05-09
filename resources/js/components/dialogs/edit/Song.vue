@@ -228,6 +228,16 @@
               :multiple="true"
             />
           </v-col>
+           <v-col
+            cols="12"
+            sm="6"
+            v-if="uploader === 'admin'"
+          >
+            <v-switch
+              v-model="editedSong.isApproved"
+              :label="$t('Aprovada')"
+            ></v-switch>
+          </v-col>
           <v-col
             cols="12"
             sm="6"
@@ -740,6 +750,13 @@ export default {
         formData.append("public", 1);
       } else {
         formData.append("public", 0);
+      }
+       if (this.editedSong.isApproved) {
+         alert("Aprovada")
+        formData.append("is_admin_approved", 1);
+      } else {
+         alert("Não Aprovada")
+        formData.append("is_admin_approved", 0);
       }
       if (this.editedSong.isExclusive) {
         formData.append("isExclusive", 1);

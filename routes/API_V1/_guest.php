@@ -61,7 +61,10 @@ Route::get('/match-playlists', 'PlaylistController@matchPlaylists');
 Route::get('/playlist/{id}', 'PlaylistController@show');
 Route::get('/genre/{id}', 'GenreController@show');
 Route::get('/podcast-genre/{podcastGenre}', 'PodcastGenreController@show');
-Route::get('/song/{id}', 'SongController@show');
+Route::group(['middleware' => ['auth:api']], function () {
+
+    Route::get('/song/{id}', 'SongController@show');
+});
 Route::get('/podcast/{id}', 'PodcastController@show');
 Route::get('/episodes/{Podcast}', 'PodcastController@episodes');
 Route::get('/artist/{id}', 'ArtistController@show');

@@ -215,6 +215,7 @@ export default {
         fetchSongs() {
             axios.get("/api/admin/songs").then(res => {
                 this.songs = res.data;
+                console.log(this.songs);
             });
         },
         wakeSongDialog(song_id) {
