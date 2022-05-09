@@ -81,6 +81,7 @@ class SongController extends Controller
      */
     public function store(Request $request)
     {
+        error_log("Store");
         ini_set('post_max_size', '100MB');
         $request->validate([
             'title' => 'required|max:255|min:1|string',
@@ -206,7 +207,9 @@ class SongController extends Controller
         $song->isExplicit  =  $request->isExplicit;
 
         //New update Leo 
-        $song->is_admin_approved = $request->isApproved;
+        $song->is_admin_approved = $request->is_admin_approved;
+        $song->admin_approver = $request->admin_approver;
+        $song->data_approved = $request->data_approved;
 
         // links
         $song->spotify_link = $request->spotify_link;
@@ -269,6 +272,7 @@ class SongController extends Controller
      */
     public function update(Request $request, $id)
     {
+        error_log("Update");
         ini_set('post_max_size', '100MB');
         $request->validate([
             'title' => 'required|max:255',
@@ -402,6 +406,10 @@ class SongController extends Controller
         $song->isExclusive  =  $request->isExclusive;
         $song->isExplicit  =  $request->isExplicit;
         // 
+        //New update Leo 
+        $song->is_admin_approved = $request->is_admin_approved;
+        $song->admin_approver = $request->admin_approver;
+        $song->data_approved = $request->data_approved;
         // links
         $song->spotify_link = $request->spotify_link;
         $song->youtube_link = $request->youtube_link;

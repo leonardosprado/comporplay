@@ -36,6 +36,10 @@ class SongResource extends JsonResource
             'isProduct' => $this->isProduct == "0" ? false : true,
             'isExclusive' => $this->isExclusive == "0" ? false : true,
             'isExplicit' => $this->isExplicit == "0" ? false : true,
+            // Leo Update =>
+            'is_admin_approved' =>  $this->is_admin_approved == "0" ? false : true,
+            'admin_approver'=>$this->admin_approver,
+            'data_approved'=>$this->data_approved,
             // 
             'nb_likes' => $this->likes->count(),            
             'nb_plays' => $this->plays->count(),           

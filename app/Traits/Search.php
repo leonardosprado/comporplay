@@ -2,8 +2,8 @@
 
 namespace App\Traits;
 
+use App\Session;
 use Illuminate\Support\Facades\Auth;
-
 use App\Helpers\Content\ListenNotes\ListenNotes;
 use App\Http\Resources\AlbumResource;
 use App\Http\Resources\ArtistResource;
@@ -224,11 +224,15 @@ trait Search
     public static function getSong($id, $page, $resource = true)
     {
         $music = \App\Song::find($id);
-        // $usuario = Auth::user();
-        // $user_is_admin = $usuario->is_admin;
-        // error_log($usuario);
+   
         // die;
-        if (($song = \App\Song::find($id)) && (($music->is_admin_approved) )){
+        error_log($music);
+        // error_log($page);
+        // error_log($id);
+        // error_log($resource);
+        // $user_is_admin = $usuario->is_admin;
+        
+        if (($song = \App\Song::find($id)) && (($song->is_admin_approved) )){
             if( !$resource ) {
                 return $song;
             } else {

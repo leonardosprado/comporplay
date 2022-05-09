@@ -752,9 +752,11 @@ export default {
         formData.append("public", 0);
       }
        if (this.editedSong.isApproved) {
-        formData.append("isApproved", 1);
+         alert("Aprovada")
+        formData.append("is_admin_approved", 1);
       } else {
-        formData.append("isApproved", 0);
+         alert("Não Aprovada")
+        formData.append("is_admin_approved", 0);
       }
       if (this.editedSong.isExclusive) {
         formData.append("isExclusive", 1);
