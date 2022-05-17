@@ -95,8 +95,12 @@ class LanguageController extends Controller
     public function appMessages($locale)
     {
         $en_messages = Cache::get('messages-en', Translation::where('locale', 'en')->get()->pluck('value', 'key'));
+        // print_r($en_messages);
+      
         if( $locale !== 'en' ) {
             $locale_messages = Cache::get('messages-' . $locale, Translation::where('locale', $locale)->get()->pluck('value', 'key'));
+            // print_r($locale_messages);
+            // die;;
             $messages =  response()->json([
                 "en" => $en_messages,
                 $locale => $locale_messages

@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/languages', 'LanguageController@indexUser');
-Route::get('/messages/{locale}', 'LanguageController@appMessages');
+// Route::get('/messages/{locale}', 'LanguageController@appMessages');
 Route::get('/track-source', 'SongController@getSource');
 Route::get('/plans', 'PlanController@userIndex');
 // most of these routes are protected by a middlewre (middlewares > Guest.php)

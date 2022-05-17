@@ -13,6 +13,7 @@ class Guest
      */
     public function handle($request, Closure $next)
     {
+    
         $requireAuth = \App\Setting::get('requireAuth');
         if ($requireAuth && !auth()->guard('api')->user()) {
             return abort(404);
