@@ -95,8 +95,12 @@ class LanguageController extends Controller
     public function appMessages($locale)
     {
         $en_messages = Cache::get('messages-en', Translation::where('locale', 'en')->get()->pluck('value', 'key'));
+        // print_r($en_messages);
+      
         if( $locale !== 'en' ) {
             $locale_messages = Cache::get('messages-' . $locale, Translation::where('locale', $locale)->get()->pluck('value', 'key'));
+            // print_r($locale_messages);
+            // die;;
             $messages =  response()->json([
                 "en" => $en_messages,
                 $locale => $locale_messages
@@ -126,7 +130,8 @@ class LanguageController extends Controller
                 $translation->save();
             }
         }
-        Artisan::call('translations:export');
+        $command = 'translations:export '.$message['group'];
+        Artisan::call('translations:export {group}',['group'=>$message['group']]);
 
         $new_messages = Translation::where('locale', $locale)->orderBy('created_at')->get(); 
         Cache::put('messages' . $locale, $new_messages);

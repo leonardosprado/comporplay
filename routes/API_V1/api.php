@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('/messages/{locale}', 'LanguageController@appMessages');
 
 Route::name('')->group(__DIR__ . '/_auth.php');
 
