@@ -126,7 +126,8 @@ class LanguageController extends Controller
                 $translation->save();
             }
         }
-        Artisan::call('translations:export');
+        $command = 'translations:export '.$message['group'];
+        Artisan::call('translations:export {group}',['group'=>$message['group']]);
 
         $new_messages = Translation::where('locale', $locale)->orderBy('created_at')->get(); 
         Cache::put('messages' . $locale, $new_messages);

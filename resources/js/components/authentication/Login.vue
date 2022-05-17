@@ -2,7 +2,7 @@
     <authentification-template v-if="!loadingPage">
         <div class="login-wrapper">
             <div class="auth-box__title">
-                <h2>{{ $t("Login to your account") }}</h2>
+                <h2>{{ $t("Faça login na sua conta") }}</h2>
             </div>
             <div class="error-message-container">
                 <v-chip
@@ -32,7 +32,7 @@
                             class="mt-3"
                             v-model="password"
                             :type="showPassword ? 'text' : 'password'"
-                            :label="$t('Password')"
+                            :label="$t('Senha')"
                             
                             outlined
                             hide-details
@@ -64,7 +64,7 @@
                             class="text"
                             @click="$router.push({ name: 'forgot_password' })"
                         >
-                            {{ $t("Forgot your password?") }}
+                            {{ $t("Esqueceu sua senha?") }}
                         </span>
                     </div>
                 </v-row>
@@ -122,7 +122,7 @@ export default {
     metaInfo: {
         title:
             window.Settings.find(set => set.key === "appName").value +
-            " - Login to your account"
+            " - Faça login na sua conta"
     },
     components: {
         LoadingBackground,
