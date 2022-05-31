@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Notifications\Messages\MailMessage;
 
 class User extends Authenticatable
 {
@@ -247,6 +249,14 @@ class User extends Authenticatable
             $model->friends()->delete();
             $model->songs()->delete();
             $model->playlists()->delete();
+        });
+
+        VerifyEmail::toMailUsing(function ($notifiable, $url) {
+            return (new MailMessage)
+                ->subject('Verificar endereço de e-mail')
+                ->line('Clique no botão abaixo para verificar seu endereço de e-mail.')
+                ->action('Verificar endereço de e-mail ', $url)
+                ->line('Se você não criou uma conta, nenhuma ação adicional é necessária.');
         });
     }
 }
